@@ -1,5 +1,23 @@
 # Proyecto de Recomendación basado en Clasificación
 
+## Introduccion:
+
+
+La empresa se encuentra en la fase de planificación para lanzar una estrategia dirigida a su base de clientes al final del mes. El propósito fundamental de esta iniciativa es personalizar las interacciones con los clientes al enviarles el producto que más se ajuste a sus necesidades, al mismo tiempo que se busca maximizar las ganancias.
+
+En términos de ganancias, la empresa ha establecido que obtiene 10€ por cada cuenta vendida. Además, se han identificado dos categorías clave de productos con sus respectivas ganancias: 40€ por productos relacionados con ahorro e inversión, y 60€ por productos de financiación, que incluyen préstamos y tarjetas.
+
+El alcance de esta acción se ve delineado por un presupuesto específico, con la capacidad de enviar alrededor de 10,000 correos electrónicos. Con el objetivo claro de optimizar los resultados, se busca no solo maximizar la tasa de respuesta de los clientes, sino también calcular el Retorno de la Inversión (ROI) asociado con esta campaña.
+
+En cuanto a las acciones solicitadas, se ha expresado la necesidad de prever la tasa de respuesta antes de enviar los correos electrónicos. Este enfoque proactivo permitirá afinar la estrategia de manera anticipada, aumentando la probabilidad de éxito y optimizando el impacto de la acción planificada.
+
+
+## Planteamiento de resolución:
+
+Debido a la necesidad de preveer la tasa de respuesta, vamos a desarrollar modelos de clasificación para cada prodocto para obtener la probabilidad de pertenecer a la clase 1 (contrata el producto). Este valor será considerado como *tasa de respuesta*. 
+
+Una vez tengamos las probabilidades las ponderaremos por el retorno que se espera de cada producto para hacer una clasificación para cada usuario - producto y seleccionar las 10.000 observaciones con mayor puntuación.
+
 ## Datos:
 
 Partimos con 3 datasets.
