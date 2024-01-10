@@ -14,10 +14,16 @@ En cuanto a las acciones solicitadas, se ha expresado la necesidad de prever la 
 
 ## Planteamiento de resolución:
 
-Debido a la necesidad de preveer la tasa de respuesta, vamos a desarrollar modelos de clasificación para cada prodocto para obtener la probabilidad de pertenecer a la clase 1 (contrata el producto). Este valor será considerado como *tasa de respuesta*. 
+Debido a la necesidad de preveer la tasa de respuesta, vamos a desarrollar modelos de clasificación para cada producto y obtener la probabilidad de pertenecer a la clase 1 (contrata el producto). Esta probabilidad la recalibraremos para poder usarla como *tasa de respuesta*. 
 
-Una vez tengamos las probabilidades las ponderaremos por el retorno que se espera de cada producto para hacer una clasificación para cada usuario - producto y seleccionar las 10.000 observaciones con mayor puntuación.
+Una vez tengamos las tasas de respuesta, las ponderaremos por el retorno que se espera de cada producto para hacer una clasificación para cada usuario - producto.
 
+Con todos estos datos obtendremos:
+- los 10.000 usuarios con mayor tasa de retorno/beneficio a los que recomendaremos productos.
+- la cantidad de cada uno de los productos que recomendaremos, con us tasa de respuesta esperado e ingreso por tipo de producto.
+- el ingreso total esperado de la campaña.
+
+  
 ## Datos:
 
 Partimos con 3 datasets.
