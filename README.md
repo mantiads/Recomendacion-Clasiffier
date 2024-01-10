@@ -69,18 +69,39 @@ Para entrenar el modelo usaremos las primeras 16 particiones, fijando la imagen 
 
 Para hacer el X debemos de tomar las 17 particiones y realizar todas las transformaciones anteriores de modo que incorpore los cambios realizados en la última de las particiones.
 
+
+## Selección de modelos
+
+Al tener en su mayoría que realizar clasificaciones con datos desequilibrados, seleccionaremos dos modelos de clasificación binaría los cuales tienen un parametro para tratar con este tipo de datos (Árbol de decisión y Bosques Aleatorios). 
+
 ## Entrenamiento:
 
-Generamos modelos para 10 de los productos debido a las pocas observaciones de productos contratados que hay para 5 de los productos.
+Centraremos el entrenamiento en 10 de los 15 productos debido a las pocas observaciones de productos contratados que hay para 5 de los 15 productos.
 
-Para entrenar y evaluar los modelos nos centraremos en la métrica de *precisión* ya que el recomendar un producto tiene un coste directo asociado y queremos primar el retorno de la inversión.
+Realizaremos una busqueda del mejor modelo con sus mejores hiperparametros usando Ramdom Search evaluado por la precisión de los modelos. El motivo de usar esta metrica se debe a la importancia de detectar aquellos clientes que realmente estén interesados en contratar el producto.
 
 **Recalibrado:**
 
-Cada uno de los 15 modelos tiene una métrica distinta de *precisión* con lo que debemos de recalibrar los resultados. Para ello usaremos un modelo de calibración sobre el modelo base. `CalibratedClassifier`
+Una vez tenemos los distintos modelos con los distintos hiperparametros, realizaremos un recalibrado para obtener las probabilidades reales.
+
+Para aquellos casos en los que los datos están más desbalanceados, el recalibrado está funcionando peor por norma general, no mejorando mucho los modelos originales.
+
+
 
 ## Resultado:
 
-Para cada uno de los productos nos quedaremos con aquellos que tienen unas predicciones superiores al 50%. A nivel de usuario, nos quedaremos solo con aquellos usuarios que en la última imagen no habían contratado el producto.
+A nivel de usuario, nos quedaremos solo con aquellos usuarios que en la última imagen no habían contratado el producto, debido a que la probabilidad de que un usuario siga contratando un producto es cercana al 100%.
 
-Por último, multiplicaremos cada probabilidad por su beneficio esperado para obtener la puntuación de cada uno de los productos para cada usuario. Seleccionaremos el producto para cada usuario con mayor puntuación y los ordenaremos por puntuación para quedarnos con las top 10000 puntuaciones.
+Multiplicaremos la probabilidad de cada uno de los productos/usuario por la precisión de cada uno de los modelos/producto para a continuación asignar el beneficio por producto. Obtendremos así una puntuación que tenga en cuenta la probabilidad de que se compre un producto y el ingreso de ese producto.
+
+Seleccionaremos para cada usuario el producto con mayor puntuación y ordenaremos los usuarios por la puntuacion de los productos seleccionados, de modo que aquellos usuarios con mayor puntuación serán los 10.000 seleccionados para ser contactados.
+
+Obtendremos los ingresos esperados para cada uno de los productos, multiplicando la probabilidad de compra de los distintos productos por el ingreso por porducto.
+
+
+
+
+
+
+
+probabilidad por su su beneficio esperado para obtener la puntuación de cada uno de los productos para cada usuario. Seleccionaremos el producto para cada usuario con mayor puntuación y los ordenaremos por puntuación para quedarnos con las top 10000 puntuaciones.
