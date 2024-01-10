@@ -99,7 +99,7 @@ Para aquellos casos en los que los datos están más desbalanceados, el recalibr
 <table>
   <tr>
     <td><img src="/images/modelo_a.png" alt="Analisis AVProductInstalled"></td>
-    <td></td>
+    <td>img src="/images/flecha.png" alt="Analisis AVProductInstalled"></td>
     <td><img src="/images/modelos_a_recalibrado.png" alt="Analisis AVProductInstalled"></td>
   </tr>
 </table>
