@@ -86,7 +86,23 @@ Una vez tenemos los distintos modelos con los distintos hiperparametros, realiza
 
 Para aquellos casos en los que los datos están más desbalanceados, el recalibrado está funcionando peor por norma general, no mejorando mucho los modelos originales.
 
+<table>
+  <tr>
+    <td><img src="/images/modelo_b.png" alt="Analisis AVProductInstalled"></td>
+    <td><img src="/images/modelos_b_recalibrado.png" alt="Analisis AVProductInstalled"></td>
+    <td></td>
+    <td><img src="/images/modelo_a.png" alt="Analisis AVProductInstalled"></td>
+    <td><img src="/images/modelos_a_recalibrado.png" alt="Analisis AVProductInstalled"></td>
+  </tr>
+</table>
 
+<table>
+  <tr>
+    <td><img src="/images/modelo_a.png" alt="Analisis AVProductInstalled"></td>
+    <td></td>
+    <td><img src="/images/modelos_a_recalibrado.png" alt="Analisis AVProductInstalled"></td>
+  </tr>
+</table>
 
 ## Resultado:
 
