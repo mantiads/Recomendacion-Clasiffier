@@ -20,7 +20,7 @@ Una vez tengamos las tasas de respuesta, las ponderaremos por el retorno que se 
 
 Con todos estos datos obtendremos:
 - los 10.000 usuarios con mayor tasa de retorno/beneficio a los que recomendaremos productos.
-- la cantidad de cada uno de los productos que recomendaremos, con us tasa de respuesta esperado e ingreso por tipo de producto.
+- la cantidad de cada uno de los productos que recomendaremos, con su tasa de respuesta esperado e ingreso por tipo de producto.
 - el ingreso total esperado de la campaña.
 
   
@@ -50,12 +50,13 @@ El principal reto es aplanar los datos de las interacciones de los usuarios con 
 De los datos se extraen las siguientes nuevas variables:
 - total de meses que cada cliente ha contratado cada producto
 - total productos contratados en la última imagen
-- total de productos contratados a lo largo de los 17 meses
+- total de productos contratados a lo largo de las particiones
 - total de altas para el conjunto de productos
 - se crean 3 categorías de productos (*ahorro e inversión, financiación y servicios*) y para cada una de ellas se computa el total de productos por cliente, así como el total de productos por cliente en la última imagen
-- por último, se extrae la situación final de cada cliente para los distintos productos, que a la hora de realizar el entrenamiento de cada algoritmo, se extrae la última imagen del producto que se está entrenando, ya que hay un gran % de casos en los que si se tiene contratado el producto no se da de baja el mes siguiente y sea la variable de mayor importancia para el modelo.
-
-Con la fecha de entrada se calcula la variable antigüedad.
+- se extrae la situación final de cada cliente para los distintos productos. A la hora de realizar el entrenamiento de cada algoritmo, extraeremos la última imagen del producto target, debido a la gran probabilidad de prolongar la contratación o no de un mes al siguiente. En las primeras pruebas de entrenamiento, identificaba esta variable como la de mayor importancia.
+- habrá filtración sobre el punto anterior para aquellos productos con mayor contratación en las variables agrupadas por tipo de producto.
+- con la fecha de entrada calcularemos la variable *antigüedad*.
+- para los datos socioeconomicos nos quedaremos con los datos mas recientes que tenemos.
 
 **Codificación de variables:**
 
@@ -63,7 +64,7 @@ Se hace OHE en la variable *entry_channel, segment y salary*.
 
 **Preparación X e y para entrenar:**
 
-Para entrenar el modelo usaremos las primeras 16 particiones, fijando la imagen de productos en la partición 17 como la etiqueta.
+Para entrenar el modelo usaremos las primeras 16 particiones, fijando el target como la etiqueta de cada producto en la partición 17.
 
 **Preparación DF para predicciones:**
 
@@ -72,15 +73,17 @@ Para hacer el X debemos de tomar las 17 particiones y realizar todas las transfo
 
 ## Selección de modelos
 
-Al tener en su mayoría que realizar clasificaciones con datos desequilibrados, seleccionaremos dos modelos de clasificación binaría los cuales tienen un parametro para tratar con este tipo de datos (Árbol de decisión y Bosques Aleatorios). 
+Al tener en su mayoría que realizar clasificaciones con datos desbalanceados, seleccionaremos dos modelos de clasificación binaría los cuales cuentan con un parametro para tratar con este tipo de datos (Árbol de decisión y Bosques Aleatorios). 
 
 ## Entrenamiento:
 
 Centraremos el entrenamiento en 10 de los 15 productos debido a las pocas observaciones de productos contratados que hay para 5 de los 15 productos.
 
-Realizaremos una busqueda del mejor modelo con sus mejores hiperparametros usando Ramdom Search evaluado por la precisión de los modelos. El motivo de usar esta metrica se debe a la importancia de detectar aquellos clientes que realmente estén interesados en contratar el producto.
+Realizaremos una busqueda del mejor modelo con sus mejores hiperparametros usando Ramdom Search evaluado por la precisión de los modelos. El motivo de usar esta métrica se debe a la importancia en llegar a aquellos clientes que realmente estén interesados en contratar el producto.
 
-Los modelos identifican que las variables más importantes para predecir son el comportamiento con el grupo asignado por tipo de producto ya sea por historico como por ultima imagen así como productos con los que tengan una gran aparición de contrataciones conjuntas.
+En general, los distintos modelos identifican como variables mas importantes para predecir:
+- el grupo asignado por tipo de producto (ya sea por total de histórico como por total de ultima imagen)
+- relación de contratación conjunta con otros productos
 
 <img src="/images/importancia.png" alt="Analisis AVProductInstalled" width="600px">
 
@@ -105,19 +108,19 @@ Este proceso ha mejorado la preción de 8 de los 10 modelos, para los dos restan
 
 **Desempeño modelos tras el recalibrado:**
 
-Una vez realizado el recalibrado, las metricas de evaluación de los distintos modelos son las siguientes.
+Una vez realizado el recalibrado, las métricas de evaluación de los distintos modelos son las siguientes.
 
 <img src="/images/Desempeno modelos.PNG" alt="Analisis AVProductInstalled">
 
-Se observa un desempeño caso perfecto en el modelo de em_acount. Esto se debe a que es el producto mayormente contratado. Es el producto estrella. Los clientes que lo contratan son clientes que lo hacen desde un inicio¡. El 60 % de los clientes lo tienen contratado desde un inicio. Esto hace que tenga un gran impacto en las variables de total ultima imagen, servicios, número de servicios y total cuentas. 
+Se observa un desempeño caso perfecto en el modelo de em_acount. Esto se debe a que es el producto mayormente contratado. Es el producto estrella. Los clientes que lo contratan son clientes que lo hacen desde un inicio. El 60 % de los clientes lo tienen contratado desde un inicio. Esto hace que tenga un gran impacto en las variables de total última imagen, servicios, número de servicios y total cuentas. 
 
 ## Resultado:
 
-A nivel de usuario, nos quedaremos solo con aquellos usuarios que en la última imagen no habían contratado el producto, debido a que la probabilidad de que un usuario siga contratando un producto es cercana al 100%.
+A nivel de usuario, nos quedaremos solo con aquellos usuarios que en la última imagen no habían contratado el producto, debido a que la probabilidad de que un usuario siga contratando un producto muy elevada y decidimos centrarnos solo en aquellos clientes que no lo tenian contratado.
 
 Multiplicaremos la probabilidad de cada uno de los productos/usuario por la precisión de cada uno de los modelos/producto para a continuación asignar el beneficio por producto. Obtendremos así una puntuación que tenga en cuenta la probabilidad de que se compre un producto y el ingreso de ese producto.
 
-Seleccionaremos para cada usuario el producto con mayor puntuación y ordenaremos los usuarios por la puntuacion de los productos seleccionados, de modo que aquellos usuarios con mayor puntuación serán los 10.000 seleccionados para ser contactados.
+Seleccionaremos para cada usuario el producto con mayor puntuación y ordenaremos los usuarios por la puntuación de los productos seleccionados, de modo que aquellos usuarios con mayor puntuación serán los 10.000 seleccionados para ser contactados.
 
 <img src="/images/usuarios_prod recomendados.PNG" alt="Analisis AVProductInstalled" width="200px">
 
