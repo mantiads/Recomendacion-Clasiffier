@@ -1,4 +1,4 @@
-# <p align="center">Proyecto de Recomendación basado en Clasificación.</p>
+# <p align="center">Proyecto de Sistema de Recomendación basado en Clasificación.</p>
 
 [Acceso a archivo Jupyter preprocesamiento.](https://github.com/mantiads/Recomendacion-Clasiffier/blob/main/EDA_preparaciondatos_datos1.ipynb)
 
