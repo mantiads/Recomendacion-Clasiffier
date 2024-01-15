@@ -1,8 +1,7 @@
 # <p align="center">Proyecto de Recomendación basado en Clasificación.</p>
 
 
-
-[Acceso a archivo Jupyter.](https://github.com/mantiads/Portfolio-Mikel-Analytics/blob/main/Codigo_analisis.ipynb)
+[Acceso a archivo Jupyter.](https://github.com/mantiads/Recomendacion-Clasiffier/blob/main/modelado.ipynb)
 
 ## Introducción:
 
