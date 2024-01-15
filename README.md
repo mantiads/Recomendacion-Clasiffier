@@ -80,30 +80,36 @@ Centraremos el entrenamiento en 10 de los 15 productos debido a las pocas observ
 
 Realizaremos una busqueda del mejor modelo con sus mejores hiperparametros usando Ramdom Search evaluado por la precisión de los modelos. El motivo de usar esta metrica se debe a la importancia de detectar aquellos clientes que realmente estén interesados en contratar el producto.
 
+Los modelos identifican que las variables más importantes para predecir son el comportamiento con el grupo asignado por tipo de producto ya sea por historico como por ultima imagen así como productos con los que tengan una gran aparición de contrataciones conjuntas.
+
+<img src="/images/importancia.png" alt="Analisis AVProductInstalled" width="600px">
+
 **Recalibrado:**
 
 Una vez tenemos los distintos modelos con los distintos hiperparametros, realizaremos un recalibrado para obtener las probabilidades reales.
 
-Para aquellos casos en los que los datos están más desbalanceados, el recalibrado está funcionando peor por norma general, no mejorando mucho los modelos originales.
+Este proceso ha mejorado la preción de 8 de los 10 modelos, para los dos restantes se ha mantenido el mismo resultado.
 
 <table>
-
- <caption style="text-align: center;">Recalibrado con datos muy desbalanceados</caption>
   <tr>
-    <td><img src="/images/modelo_b.png" alt="Analisis AVProductInstalled" ></td>
-    <td><img src="/images/felcha.png" alt="Analisis AVProductInstalled" width="200px"></td>
-    <td><img src="/images/modelos_b_recalibrado.png" alt="Analisis AVProductInstalled"></td>    
+    <td><img src="/images/sin calibrar.png" alt="Analisis AVProductInstalled"></td>
+    <td><img src="/images/felcha.png" alt="Analisis AVProductInstalled" width="150px"></td>
+    <td><img src="/images/calibrado.png" alt="Analisis AVProductInstalled"></td>    
+  </tr>
+  <tr>
+    <td><img src="/images/sin_calibrar_metricas.PNG" alt="Analisis AVProductInstalled"></td>
+    <td><img src="/images/felcha.png" alt="Analisis AVProductInstalled" width="150px"></td>
+    <td><img src="/images/calibrado_metricas.PNG" alt="Analisis AVProductInstalled"></td>
   </tr>
 </table>
 
-<table>
-  <caption style="text-align: center;">Recalibrado con datos muy desbalanceados</caption>
-  <tr>
-    <td><img src="/images/modelo_a.png" alt="Analisis AVProductInstalled"></td>
-    <td><img src="/images/felcha.png" alt="Analisis AVProductInstalled" width="200px"></td>
-    <td><img src="/images/modelos_a_recalibrado.png" alt="Analisis AVProductInstalled"></td>
-  </tr>
-</table>
+**Desempeño modelos tras el recalibrado:**
+
+Una vez realizado el recalibrado, las metricas de evaluación de los distintos modelos son las siguientes.
+
+<img src="/images/Desempeno modelos.PNG" alt="Analisis AVProductInstalled">
+
+Se observa un desempeño caso perfecto en el modelo de em_acount. Esto se debe a que es el producto mayormente contratado. Es el producto estrella. Los clientes que lo contratan son clientes que lo hacen desde un inicio¡. El 60 % de los clientes lo tienen contratado desde un inicio. Esto hace que tenga un gran impacto en las variables de total ultima imagen, servicios, número de servicios y total cuentas. 
 
 ## Resultado:
 
@@ -113,12 +119,15 @@ Multiplicaremos la probabilidad de cada uno de los productos/usuario por la prec
 
 Seleccionaremos para cada usuario el producto con mayor puntuación y ordenaremos los usuarios por la puntuacion de los productos seleccionados, de modo que aquellos usuarios con mayor puntuación serán los 10.000 seleccionados para ser contactados.
 
-Obtendremos los ingresos esperados para cada uno de los productos, multiplicando la probabilidad de compra de los distintos productos por el ingreso por porducto.
+<img src="/images/usuarios_prod recomendados.PNG" alt="Analisis AVProductInstalled" width="200px">
 
+Obtendremos los ingresos esperados para cada uno de los productos, multiplicando la probabilidad de compra de los distintos productos por el ingreso por producto.
 
+A continuación se muestra un cuadro resumen final con datos por producto de total de veces recomendado, ingreso unitario, Tasa de Respuesta e Ingrsos totales esperados por producto.
 
+<img src="/images/resultado.PNG" alt="Analisis AVProductInstalled">
 
+El ingreso total esperado de la campaña será la suma de los ingresos totales esperados por producto. 
 
+## TOTAL DE INGRESOS ESPERADOS CAMPAÑA = 147819 €
 
-
-probabilidad por su su beneficio esperado para obtener la puntuación de cada uno de los productos para cada usuario. Seleccionaremos el producto para cada usuario con mayor puntuación y los ordenaremos por puntuación para quedarnos con las top 10000 puntuaciones.
