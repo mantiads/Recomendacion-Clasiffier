@@ -1,6 +1,7 @@
 # <p align="center">Proyecto de Recomendación basado en Clasificación.</p>
 
 [Acceso a archivo Jupyter preprocesamiento.](https://github.com/mantiads/Recomendacion-Clasiffier/blob/main/EDA_preparaciondatos_datos1.ipynb)
+
 [Acceso a archivo Jupyter modelado.](https://github.com/mantiads/Recomendacion-Clasiffier/blob/main/modelado.ipynb)
 
 ## Introducción:
@@ -26,14 +27,14 @@ Con todos estos datos obtendremos:
 
 ## Datos:
 
+[Acceso a archivo Jupyter preprocesamiento.](https://github.com/mantiads/Recomendacion-Clasiffier/blob/main/EDA_preparaciondatos_datos1.ipynb)
+
 Partimos con 3 datasets.
 - datos sociodemográficos
 - datos de actividad_comercial
 - datos de interacciones de los distintos usuarios con los 15 productos de la compañía a lo largo de 17 meses
 
-## Transformación de los datos:
-
-[Acceso a archivo Jupyter preprocesamiento.](https://github.com/mantiads/Recomendacion-Clasiffier/blob/main/EDA_preparaciondatos_datos1.ipynb)
+### Transformación de los datos:
 
 **Tratamiento de *nan*:**
 
@@ -72,13 +73,15 @@ Para entrenar el modelo usaremos las primeras 16 particiones, fijando el target 
 
 Para hacer el X debemos de tomar las 17 particiones y realizar todas las transformaciones anteriores de modo que incorpore los cambios realizados en la última de las particiones.
 
-## Selección de modelos
+## Modelo
 
 [Acceso a archivo Jupyter modelado.](https://github.com/mantiads/Recomendacion-Clasiffier/blob/main/modelado.ipynb)
 
+### Selección de modelos
+
 Al tener en su mayoría que realizar clasificaciones con datos desbalanceados, seleccionaremos dos modelos de clasificación binaria los cuales cuentan con un parámetro para tratar con este tipo de datos (Árbol de decisión y Bosques Aleatorios).
 
-## Entrenamiento:
+### Entrenamiento:
 
 Centraremos el entrenamiento en 10 de los 15 productos debido a las pocas observaciones de productos contratados que hay para 5 de los 15 productos.
 
